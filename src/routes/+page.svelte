@@ -6,8 +6,11 @@
 
   $: priceChanges = data.priceChanges.sort((a, b) => b.priceChangePercentage - a.priceChangePercentage);
   $: showAmount = screenSize > 900 ? 8 : 6;
-  $: increases = priceChanges.slice(0, showAmount);
-  $: decreases = priceChanges.slice(priceChanges.length - showAmount, priceChanges.length).reverse();
+  $: increases = priceChanges.slice(0, showAmount).filter(priceChange => priceChange.priceChangePercentage > 0);
+  $: decreases = priceChanges
+    .slice(priceChanges.length - showAmount, priceChanges.length)
+    .filter(priceChange => priceChange.priceChangePercentage < 0)
+    .reverse();
 
 </script>
 
