@@ -61,10 +61,6 @@
 
 <style>
   #content {
-    max-width: 1000px;
-    margin: auto;
-    padding: var(--m-small);
-    overflow-x: hidden;
     position: relative;
   }
   .grid-container {
@@ -93,9 +89,6 @@
   @media (min-width: 650px) {
     .grid-container {
       grid-template-columns: repeat(3, 1fr);
-    }
-    #content {
-      padding: var(--m-normal) var(--m-large);
     }
   }
   @media (min-width: 900px) {

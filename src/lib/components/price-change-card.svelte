@@ -71,8 +71,14 @@
     gap: var(--m-tiny);
     padding-left: var(--m-small);
   }
-  @media (min-width: 600px) {
-    #perc-change {
+  #perc-change {
+    padding-right: var(--m-small);
+  }
+  #perc-change, #prices {
+    font-size: var(--font-size-small);
+  }
+  @media (min-width: 800px) {
+    #perc-change, #prices {
       font-size: var(--font-size-normal);
     }
   }

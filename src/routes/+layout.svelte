@@ -20,5 +20,14 @@
   }
   #slot-container {
     flex: 1;
+    max-width: 1000px !important;
+    margin: auto;
+    padding: var(--m-small);
+    overflow-x: hidden;
+  }
+  @media (min-width: 650px) {
+    #slot-container {
+      padding: var(--m-normal) var(--m-large);
+    }
   }
 </style>
