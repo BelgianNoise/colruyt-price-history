@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { RootLoadResults } from "./+page.server";
   import PriceChangeCard from "$lib/components/price-change-card.svelte";
+  import InfoSVG from "$lib/svgs/info.svelte";
   export let data: RootLoadResults;
   let screenSize: number;
 
@@ -19,7 +20,7 @@
 <div id="content">
 
   <div class="tooltip-container">
-    <span>dsfsdf</span>
+    <InfoSVG />
     <p class="tooltip">
       Deze data kan tijdelijke promoties bevatten.<br/>
       Colruyt geeft dit niet expliciet aan in hun prijzen overzicht.
