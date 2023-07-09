@@ -46,11 +46,11 @@
   #body > img {
     max-width: 100%;
     max-height: 100%;
+    aspect-ratio: 1 / 1;
   }
   #product-name {
     font-weight: bold;
     overflow-wrap: break-word;
-    font-size: var(--font-size-tiny);
   }
   #old-price {
     text-decoration: line-through;
@@ -75,12 +75,12 @@
   #perc-change {
     padding-right: var(--m-small);
   }
-  #perc-change, #prices {
-    font-size: var(--font-size-small);
+  #perc-change, #prices, #product-name {
+    font-size: var(--font-size-tiny);
   }
   @media (min-width: 900px) {
     #perc-change, #prices, #product-name {
-      font-size: var(--font-size-normal);
+      font-size: var(--font-size-small);
     }
   }
 </style>
