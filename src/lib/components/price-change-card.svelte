@@ -18,7 +18,7 @@
 >
   <div id="body" slot="body">
     <img src={priceChange.squareImage} alt="product" loading="lazy">
-    <span id="product-name">{priceChange.name.replaceAll('&', ' & ')}</span>
+    <span id="product-name">{priceChange.name.replaceAll(/([&\.])/gim, ' $1 ')}</span>
   </div>
   <div slot="footer">
     <span
@@ -50,6 +50,7 @@
   #product-name {
     font-weight: bold;
     overflow-wrap: break-word;
+    font-size: var(--font-size-tiny);
   }
   #old-price {
     text-decoration: line-through;
@@ -77,8 +78,8 @@
   #perc-change, #prices {
     font-size: var(--font-size-small);
   }
-  @media (min-width: 800px) {
-    #perc-change, #prices {
+  @media (min-width: 900px) {
+    #perc-change, #prices, #product-name {
       font-size: var(--font-size-normal);
     }
   }
