@@ -1,0 +1,74 @@
+:root {
+  --color-colruyt: #F5822A;
+  --color-colruyt-red: #D0021B;
+  --color-background: #fff;
+  --color-background-light: #fff;
+  --color-background-dark: #e6e6e6;
+  --color-foreground: #111;
+  --color-foreground-light: #333;
+
+  --m-tiny: 5px;
+  --m-small: 10px;
+  --m-normal: 20px;
+  --m-large: 40px;
+  --m-huge: 80px;
+
+  --font-size-mini: 0.5rem;
+  --font-size-tiny: 0.8rem;
+  --font-size-small: 1rem;
+  --font-size-normal: 1.2rem;
+  --font-size-large: 1.6rem;
+}
+
+html {
+  font-size: var(--font-size-normal);
+  font-family: "Dynamite", sans-serif;
+  color: var(--color-foreground);
+  background-color: var(--color-background);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+html, body {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+input, textarea, button {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  box-shadow: none;
+}
+button {
+  cursor: pointer;
+}
+button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+a {
+  color: var(--color-foreground);
+}
+
+.tooltip-container {
+  position: relative;
+}
+.tooltip {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 2;
+  padding: var(--m-normal);
+  border-radius: 10px;
+  border: 1px solid var(--color-background);
+  display: none;
+  width: 300px;
+  background-color: #555;
+  color: var(--color-background);
+  text-align: center;
+}
+.tooltip-container:hover .tooltip {
+  display: block;
+}
