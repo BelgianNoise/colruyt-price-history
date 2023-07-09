@@ -10,6 +10,9 @@
   };
 
   $: percChange = Math.round(priceChange.priceChangePercentage * 100);
+  $: name = 
+    priceChange.name.charAt(0).toUpperCase() +
+    priceChange.name.slice(1).replaceAll(/([&\.])/gim, ' $1 ')
 </script>
 
 <Card
@@ -18,7 +21,7 @@
 >
   <div id="body" slot="body">
     <img src={priceChange.squareImage} alt="product" loading="lazy">
-    <span id="product-name">{priceChange.name.replaceAll(/([&\.])/gim, ' $1 ')}</span>
+    <span id="product-name">{name}</span>
   </div>
   <div slot="footer">
     <span
