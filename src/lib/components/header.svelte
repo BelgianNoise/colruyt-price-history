@@ -1,5 +1,13 @@
 <script>
   import SearchSVG from "$lib/svgs/search.svelte";
+
+  let searchValue = "";
+
+  const search = () => {
+    if (searchValue?.length > 1) {
+      window.location.href = `/search/${searchValue}`;
+    }
+  };
 </script>
 
 <div id="header">
@@ -11,8 +19,17 @@
     on:click={() => window.location.href = "/"}
   />
   <div id="input-container">
-    <input type="text" placeholder="cola zero" />
-    <button>
+    <input
+      type="text"
+      bind:value={searchValue}
+      placeholder="cola zero"
+      on:keydown={(e) => {
+        if (e.key === "Enter") search();
+      }}
+    />
+    <button
+      on:click={() => search()}
+    >
       <span>zoeken</span>
       <SearchSVG />
     </button>
