@@ -67,14 +67,6 @@
   #content {
     position: relative;
   }
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1px;
-    padding: 1px;
-    max-width: 100%;
-    background-color: #bbb;
-  }
   .header {
     margin: var(--m-small);
     padding: var(--m-small);
@@ -85,19 +77,7 @@
   .header span {
     font-size: var(--font-size-tiny);
   }
-
   .tooltip-container {
     float: right;
-  }
-
-  @media (min-width: 650px) {
-    .grid-container {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  @media (min-width: 900px) {
-    .grid-container {
-      grid-template-columns: repeat(4, 1fr);
-    }
   }
 </style>

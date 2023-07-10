@@ -5,6 +5,5 @@ export interface PriceChange extends Product {
   priceChange: number;
   priceChangePercentage: number;
   involvesPromotion: boolean;
-  price: Price;
   oldPrice: Price;
 }

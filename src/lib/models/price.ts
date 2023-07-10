@@ -4,5 +4,4 @@ export interface Price {
   measurementUnit: string;
   measurementUnitPrice: number;
   recommendedQuantity: string;
-  promotion: string;
 }

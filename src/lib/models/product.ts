@@ -1,3 +1,5 @@
+import type { Price } from "./price";
+
 export interface Product {
   id: string;
   name: string;
@@ -28,6 +30,8 @@ export interface Product {
   topCategoryId: string;
   topCategoryName: string;
   walkRouteSequenceNumber: number;
+  promotion: string;
+  price: Price;
 }
 
 export const parseToProduct = (input: Record<string, any>): Product => ({
@@ -60,4 +64,12 @@ export const parseToProduct = (input: Record<string, any>): Product => ({
   topCategoryId: input.top_category_id,
   topCategoryName: input.top_category_name,
   walkRouteSequenceNumber: input.walk_route_sequence_number,
+  promotion: input.promotion,
+  price: {
+    basicPrice: input.basic_price,
+    isRedPrice: input.is_red_price,
+    measurementUnit: input.measurement_unit,
+    measurementUnitPrice: input.measurement_unit_price,
+    recommendedQuantity: input.recommended_quantity,
+  }
 });

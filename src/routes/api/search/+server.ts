@@ -8,9 +8,23 @@ export async function GET(event: RequestEvent): Promise<Response> {
   if (!query) return json([], { status: 400 });
 
   const result = await dbPool.query(`
-    SELECT *
-    FROM products.product
-    WHERE long_name ILIKE '%' || $1 || '%'
+    SELECT p.*, pr.id as price_id, pr.*
+    FROM
+      products.product as p
+      INNER JOIN
+      products.price as pr
+      ON p.id = pr.product_id
+    WHERE
+      long_name ILIKE '%' || $1 || '%'
+      AND
+      pr.id = (
+        SELECT id
+        FROM products.price
+        WHERE product_id = p.id
+        ORDER BY time DESC
+        LIMIT 1
+      )
+    LIMIT 100
   `, [ query ]);
 
   const products: Product[] = result.rows.map((row) => parseToProduct(row));

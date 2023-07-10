@@ -1,28 +1,13 @@
 <script lang="ts">
   import type { PriceChange } from "$lib/models/price-change";
-  import Card from "./card.svelte";
+  import ProductCard from "./product-card.svelte";
 
   export let priceChange: PriceChange;
 
-  const handleClick = () => {
-    console.log('gooo', priceChange.id)
-    window.location.href = `/product/${priceChange.id}`;
-  };
-
   $: percChange = Math.round(priceChange.priceChangePercentage * 100);
-  $: name = 
-    priceChange.name.charAt(0).toUpperCase() +
-    priceChange.name.slice(1).replaceAll(/([&\.])/gim, ' $1 ')
 </script>
 
-<Card
-  hideHeader
-  onClick={handleClick}
->
-  <div id="body" slot="body">
-    <img src={priceChange.squareImage} alt="product" loading="lazy">
-    <span id="product-name">{name}</span>
-  </div>
+<ProductCard product={priceChange}>
   <div slot="footer">
     <span
       id="perc-change"
@@ -38,23 +23,9 @@
       >€ {priceChange.price.basicPrice}</span>
     </div>
   </div>
-</Card>
+</ProductCard>
 
 <style>
-  #body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--m-small);
-  }
-  #body > img {
-    max-width: 100%;
-    max-height: 100%;
-    aspect-ratio: 1 / 1;
-  }
-  #product-name {
-    font-weight: bold;
-    overflow-wrap: break-word;
-  }
   #old-price {
     text-decoration: line-through;
   }
@@ -78,11 +49,11 @@
   #perc-change {
     padding-right: var(--m-small);
   }
-  #perc-change, #prices, #product-name {
+  #perc-change, #prices {
     font-size: var(--font-size-tiny);
   }
   @media (min-width: 900px) {
-    #perc-change, #prices, #product-name {
+    #perc-change, #prices {
       font-size: var(--font-size-small);
     }
   }
