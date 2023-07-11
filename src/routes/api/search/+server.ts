@@ -35,6 +35,11 @@ export async function GET(event: RequestEvent): Promise<Response> {
   `, [ query, ...splitQuery ]);
 
   const products: Product[] = result.rows.map((row) => parseToProduct(row));
+  const sorted = products.sort((a, b) => {
+    if (a.longName.toLowerCase().includes(query.toLowerCase())) return -1;
+    if (b.longName.toLowerCase().includes(query.toLowerCase())) return 1;
+    return 0;
+  });
 
-  return json(products);
+  return json(sorted);
 }
