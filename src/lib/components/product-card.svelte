@@ -21,6 +21,9 @@
     <img src={product.squareImage} alt="product" loading="lazy">
     <span id="product-name">{name}</span>
     <span>{product.content}</span>
+    {#if product.price.promotion}
+      <span id="promo">Actie</span>
+    {/if}
   </div>
   <slot name="footer" slot="footer" />
 </Card>
@@ -30,6 +33,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--m-small);
+    position: relative;
   }
   #body > img {
     max-width: 100%;
@@ -41,6 +45,17 @@
     overflow-wrap: break-word;
     font-size: var(--font-size-tiny);
   }
+  #promo {
+    position: absolute;
+    top: 0;
+    left: calc(var(--m-small) * -1);
+    background-color: var(--color-colruyt-red);
+    color: var(--color-background);
+    padding: var(--m-tiny) var(--m-small);
+    font-size: var(--font-size-tiny);
+    font-weight: bold;
+  }
+
   @media (min-width: 900px) {
     #product-name {
       font-size: var(--font-size-small);

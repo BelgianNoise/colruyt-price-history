@@ -9,6 +9,9 @@
 {#if data.product}
   <div id="content">
     <div id="info-panel">
+      {#if data.product.price.promotion}
+        <span id="promo">Actie</span>
+      {/if}
       <img src={data.product.squareImage} alt="product">
       <div id="info-grid">
         {#if data.product.brand}
@@ -88,6 +91,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
   }
   #info-panel > img {
     width: 70%;
@@ -105,6 +109,16 @@
     width: 100%;
     text-align: right;
   }
+  #promo {
+    position: absolute;
+    top: var(--m-small);
+    left: var(--m-small);
+    background-color: var(--color-colruyt-red);
+    color: var(--color-background);
+    padding: var(--m-tiny) var(--m-small);
+    font-size: var(--font-size-tiny);
+    font-weight: bold;
+  }
   @media (min-width: 700px) {
     #info-panel {
       flex-direction: row;
@@ -115,6 +129,7 @@
       margin: 0;
     }
     #info-grid {
+      flex: 1;
       border-left: 1px solid var(--color-foreground);
     }
   }

@@ -48,12 +48,13 @@
           y: {
             beginAtZero: true,
             offsetAfterAutoskip: true,
-            max: Math.round(Math.max(...sortedPrices.map(price => price.basicPrice)) * 1.1),
+            max: Math.round(Math.max(...sortedPrices.map(price => price.basicPrice)) * 1.1 + 0.5),
             ticks: {
               callback: function(value) {
                 return `€ ${value}`;
               },
               font: { size: 18 },
+              maxTicksLimit: 10,
             },
           },
           x: {
