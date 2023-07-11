@@ -5,6 +5,7 @@ export interface Price {
   measurementUnitPrice: number;
   recommendedQuantity: string;
   promotion: string;
+  time: string;
 }
 
 export const parseToPrice = (input: Record<string, any>): Price => ({
@@ -15,6 +16,7 @@ export const parseToPrice = (input: Record<string, any>): Price => ({
   recommendedQuantity: input.recommended_quantity,
   // some data has promotion as NULL, mistakes were made
   promotion: input.promotion === 'NULL' ? '' : input.promotion,
+  time: input.time,
 });
 
 export const parsePriceToString = (price: Price | number): string => {

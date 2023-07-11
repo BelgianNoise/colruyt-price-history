@@ -2,6 +2,9 @@
   import "./styles.css"
   import Header from "$lib/components/header.svelte";
   import Footer from "$lib/components/footer.svelte";
+  // Setup chart.js to use globally
+  import { Chart, registerables } from 'chart.js';
+  Chart.register(...registerables);
 </script>
 
 <div id="container">

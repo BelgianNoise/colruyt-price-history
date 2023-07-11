@@ -11,8 +11,10 @@
     <div id="info-panel">
       <img src={data.product.squareImage} alt="product">
       <div id="info-grid">
-        <span class="info-grid-item-title">merk:</span>
-        <span>{data.product.brand}</span>
+        {#if data.product.brand}
+          <span class="info-grid-item-title">merk:</span>
+          <span>{data.product.brand}</span>
+        {/if}
         <span class="info-grid-item-title">product:</span>
         <span>{data.product.name}</span>
         {#if data.product.content}
@@ -41,8 +43,8 @@
         {/if}
         <span class="info-grid-item-title">bio:</span>
         <span>{data.product.isBio ? 'Ja' : 'Neen'}</span>
-        <span class="info-grid-item-title">biffe:</span>
-        <span>{data.product.isBiffe ? 'Ja' : 'Neen'}</span>
+        <!-- <span class="info-grid-item-title">biffe:</span>
+        <span>{data.product.isBiffe ? 'Ja' : 'Neen'}</span> -->
         <span class="info-grid-item-title">beschikbaar:</span>
         <span>{data.product.isAvailable ? 'Ja' : 'Neen'}</span>
       </div>
@@ -102,5 +104,18 @@
     font-weight: bold;
     width: 100%;
     text-align: right;
+  }
+  @media (min-width: 700px) {
+    #info-panel {
+      flex-direction: row;
+      gap: var(--m-normal);
+    }
+    #info-panel > img {
+      width: 30%;
+      margin: 0;
+    }
+    #info-grid {
+      border-left: 1px solid var(--color-foreground);
+    }
   }
 </style>
