@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { parsePriceToString, parseUnitToString } from "$lib/models/price";
+  import PricesHistory from "$lib/components/prices-history.svelte";
+  import { parsePriceToString, parseUnitToString } from "$lib/models/price";
   import type { ProductLoadResults } from "./+page.server";
 
   export let data: ProductLoadResults;
@@ -7,43 +8,53 @@
 
 {#if data.product}
   <div id="content">
-    <img src={data.product.squareImage} alt="product">
-    <div id="info-grid">
-      <span class="info-grid-item-title">merk:</span>
-      <span>{data.product.brand}</span>
-      <span class="info-grid-item-title">product:</span>
-      <span>{data.product.name}</span>
-      {#if data.product.content}
-        <span class="info-grid-item-title">inhoud:</span>
-        <span>{data.product.content}</span>
-      {/if}
-      {#if data.product.price.basicPrice !== data.product.price.measurementUnitPrice}
-        <span class="info-grid-item-title">prijs:</span>
-        <span>{parsePriceToString(data.product.price)}</span>
-      {/if}
-      {#if data.product.price.measurementUnitPrice && data.product.price.measurementUnit}
-        <span class="info-grid-item-title">prijs:</span>
-        <span>
-          {parsePriceToString(data.product.price.measurementUnitPrice)}
-          /
-          {parseUnitToString(data.product.price.measurementUnit)}
-        </span>
-      {/if}
-      {#if data.product.alcoholVolume && Number(data.product.alcoholVolume) > 0}
-        <span class="info-grid-item-title">Alcohol:</span>
-        <span>{data.product.alcoholVolume} %</span>
-      {/if}
-      {#if data.product.countryOfOrigin}
-        <span class="info-grid-item-title">oorsprong:</span>
-        <span>{data.product.countryOfOrigin}</span>
-      {/if}
-      <span class="info-grid-item-title">bio:</span>
-      <span>{data.product.isBio ? 'Ja' : 'Neen'}</span>
-      <span class="info-grid-item-title">biffe:</span>
-      <span>{data.product.isBiffe ? 'Ja' : 'Neen'}</span>
-      <span class="info-grid-item-title">beschikbaar:</span>
-      <span>{data.product.isAvailable ? 'Ja' : 'Neen'}</span>
+    <div id="info-panel">
+      <img src={data.product.squareImage} alt="product">
+      <div id="info-grid">
+        <span class="info-grid-item-title">merk:</span>
+        <span>{data.product.brand}</span>
+        <span class="info-grid-item-title">product:</span>
+        <span>{data.product.name}</span>
+        {#if data.product.content}
+          <span class="info-grid-item-title">inhoud:</span>
+          <span>{data.product.content}</span>
+        {/if}
+        {#if data.product.price.basicPrice !== data.product.price.measurementUnitPrice}
+          <span class="info-grid-item-title">prijs:</span>
+          <span>{parsePriceToString(data.product.price)}</span>
+        {/if}
+        {#if data.product.price.measurementUnitPrice && data.product.price.measurementUnit}
+          <span class="info-grid-item-title">prijs:</span>
+          <span>
+            {parsePriceToString(data.product.price.measurementUnitPrice)}
+            /
+            {parseUnitToString(data.product.price.measurementUnit)}
+          </span>
+        {/if}
+        {#if data.product.alcoholVolume && Number(data.product.alcoholVolume) > 0}
+          <span class="info-grid-item-title">Alcohol:</span>
+          <span>{data.product.alcoholVolume} %</span>
+        {/if}
+        {#if data.product.countryOfOrigin}
+          <span class="info-grid-item-title">oorsprong:</span>
+          <span>{data.product.countryOfOrigin}</span>
+        {/if}
+        <span class="info-grid-item-title">bio:</span>
+        <span>{data.product.isBio ? 'Ja' : 'Neen'}</span>
+        <span class="info-grid-item-title">biffe:</span>
+        <span>{data.product.isBiffe ? 'Ja' : 'Neen'}</span>
+        <span class="info-grid-item-title">beschikbaar:</span>
+        <span>{data.product.isAvailable ? 'Ja' : 'Neen'}</span>
+      </div>
     </div>
+    {#if data.prices.length > 2}
+      <PricesHistory prices={data.prices} />
+    {:else}
+      <p id="not-enough-data">
+        Voor dit product hebben we niet genoeg data om een
+        grafiek op te stellen :(
+      </p>
+    {/if}
   </div>
 {:else}
   <div class="empty">
@@ -64,8 +75,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: var(--m-normal);
   }
-  #content > img {
+  #not-enough-data {
+    text-align: center;
+    width: 70%;
+  }
+  #info-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  #info-panel > img {
     width: 70%;
     margin: auto;
   }
