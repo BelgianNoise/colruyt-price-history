@@ -26,6 +26,9 @@ export async function GET(event: RequestEvent): Promise<Response> {
       )
     LIMIT 100
   `, [ query ]);
+  // const splitQuery = query.split(' ');
+  // (` + splitQuery.map((_, index) => `long_name ILIKE '%' || $${index+1} || '%'`).join(' OR ') +`)
+
 
   const products: Product[] = result.rows.map((row) => parseToProduct(row));
 
