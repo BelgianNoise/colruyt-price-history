@@ -28,6 +28,6 @@ export async function GET(event: RequestEvent): Promise<Response> {
   `, [ query ]);
 
   const products: Product[] = result.rows.map((row) => parseToProduct(row));
-  console.log('====', products)
+
   return json(products);
 }
