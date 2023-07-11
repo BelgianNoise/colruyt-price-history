@@ -9,7 +9,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
   if (!productId || productId === 'undefined') return json([], { status: 400 });
 
   const result = await dbPool.query(`
-    SELECT p.*, pr.id as price_id, pr.*
+    SELECT p.*, pr.id as price_id, pr.*, p.id
     FROM
       products.product as p
       LEFT JOIN

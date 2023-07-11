@@ -8,7 +8,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
   if (!query) return json([], { status: 400 });
 
   const result = await dbPool.query(`
-    SELECT p.*, pr.id as price_id, pr.*
+    SELECT p.*, pr.id as price_id, pr.*, p.id
     FROM
       products.product as p
       INNER JOIN
@@ -28,6 +28,6 @@ export async function GET(event: RequestEvent): Promise<Response> {
   `, [ query ]);
 
   const products: Product[] = result.rows.map((row) => parseToProduct(row));
-
+  console.log('====', products)
   return json(products);
 }
