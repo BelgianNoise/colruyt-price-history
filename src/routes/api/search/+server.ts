@@ -6,6 +6,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
 
   const query = event.url.searchParams.get('query');
   if (!query) return json([], { status: 400 });
+  const splitQuery = query.split(' ');
 
   const result = await dbPool.query(`
     SELECT p.*, pr.id as price_id, pr.*, p.id
@@ -15,7 +16,13 @@ export async function GET(event: RequestEvent): Promise<Response> {
       products.price as pr
       ON p.id = pr.product_id
     WHERE
-      long_name ILIKE '%' || $1 || '%'
+      (
+        long_name ILIKE '%' || $1 || '%'
+        OR
+        (
+          ` + splitQuery.map((_, index) => `long_name ILIKE '%' || $${index+2} || '%'`).join(' AND ') + `
+        )
+      )
       AND
       pr.id = (
         SELECT id
@@ -25,10 +32,7 @@ export async function GET(event: RequestEvent): Promise<Response> {
         LIMIT 1
       )
     LIMIT 100
-  `, [ query ]);
-  // const splitQuery = query.split(' ');
-  // (` + splitQuery.map((_, index) => `long_name ILIKE '%' || $${index+1} || '%'`).join(' OR ') +`)
-
+  `, [ query, ...splitQuery ]);
 
   const products: Product[] = result.rows.map((row) => parseToProduct(row));
 
