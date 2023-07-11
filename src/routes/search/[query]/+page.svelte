@@ -1,5 +1,6 @@
 <script lang="ts">
   import ProductCard from "$lib/components/product-card.svelte";
+    import { parsePriceToString } from "$lib/models/price";
   import type { SearchLoadResults } from "./+page.server";
 
   export let data: SearchLoadResults;
@@ -14,7 +15,7 @@
       {#each data.products as product}
         <ProductCard product={product}>
           <div slot="footer">
-            <span id="price">€ {Math.round(product.price.basicPrice * 100) / 100}</span>
+            <span id="price">{parsePriceToString(product.price)}</span>
           </div>
         </ProductCard>
       {/each}

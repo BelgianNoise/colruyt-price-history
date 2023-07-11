@@ -1,17 +1,84 @@
 <script lang="ts">
+    import { parsePriceToString, parseUnitToString } from "$lib/models/price";
   import type { ProductLoadResults } from "./+page.server";
 
   export let data: ProductLoadResults;
 </script>
 
 {#if data.product}
-  <p>{data.product.longName} - {data.product.price.basicPrice} - {data.prices.length}</p>
-  <p>{data.product.price.promotion}</p>
-  <p>{data.prices.map((p) => p.basicPrice)}</p>
+  <div id="content">
+    <img src={data.product.squareImage} alt="product">
+    <div id="info-grid">
+      <span class="info-grid-item-title">merk:</span>
+      <span>{data.product.brand}</span>
+      <span class="info-grid-item-title">product:</span>
+      <span>{data.product.name}</span>
+      {#if data.product.content}
+        <span class="info-grid-item-title">inhoud:</span>
+        <span>{data.product.content}</span>
+      {/if}
+      {#if data.product.price.basicPrice !== data.product.price.measurementUnitPrice}
+        <span class="info-grid-item-title">prijs:</span>
+        <span>{parsePriceToString(data.product.price)}</span>
+      {/if}
+      {#if data.product.price.measurementUnitPrice && data.product.price.measurementUnit}
+        <span class="info-grid-item-title">prijs:</span>
+        <span>
+          {parsePriceToString(data.product.price.measurementUnitPrice)}
+          /
+          {parseUnitToString(data.product.price.measurementUnit)}
+        </span>
+      {/if}
+      {#if data.product.alcoholVolume && Number(data.product.alcoholVolume) > 0}
+        <span class="info-grid-item-title">Alcohol:</span>
+        <span>{data.product.alcoholVolume} %</span>
+      {/if}
+      {#if data.product.countryOfOrigin}
+        <span class="info-grid-item-title">oorsprong:</span>
+        <span>{data.product.countryOfOrigin}</span>
+      {/if}
+      <span class="info-grid-item-title">bio:</span>
+      <span>{data.product.isBio ? 'Ja' : 'Neen'}</span>
+      <span class="info-grid-item-title">biffe:</span>
+      <span>{data.product.isBiffe ? 'Ja' : 'Neen'}</span>
+      <span class="info-grid-item-title">beschikbaar:</span>
+      <span>{data.product.isAvailable ? 'Ja' : 'Neen'}</span>
+    </div>
+  </div>
 {:else}
-  <p>Product niet gevonden</p>
+  <div class="empty">
+    <p>Product niet gevonden!</p>
+    <a href="/">Terug naar de startpagina</a>
+  </div>
 {/if}
 
 <style>
-
+  .empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  #content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  #content > img {
+    width: 70%;
+    margin: auto;
+  }
+  #info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: var(--m-small);
+    grid-template-areas: "name price";
+  }
+  .info-grid-item-title {
+    font-weight: bold;
+    width: 100%;
+    text-align: right;
+  }
 </style>
