@@ -28,7 +28,7 @@
   </div>
 
   <div class="header">
-    <h3>Sterkste stijgers</h3>
+    <h2>Sterkste stijgers</h2>
     <span>van vandaag</span>
   </div>
   {#if increases.length === 0}
@@ -45,7 +45,7 @@
   {/if}
   
   <div class="header">
-    <h3>Drastische dalers</h3>
+    <h2>Drastische dalers</h2>
     <span>van vandaag</span>
   </div>
   {#if decreases.length === 0}
@@ -71,7 +71,7 @@
     margin: var(--m-small);
     padding: var(--m-small);
   }
-  .header h3 {
+  .header h2 {
     display: inline-block;
   }
   .header span {
