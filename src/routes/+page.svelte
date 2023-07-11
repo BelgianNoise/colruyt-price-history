@@ -22,7 +22,7 @@
   <div class="tooltip-container">
     <InfoSVG />
     <p class="tooltip">
-      Deze data kan tijdelijke promoties bevatten.<br/>
+      Deze data kan prijsveranderingen door andere winkelketens bevatten.<br/>
       Colruyt geeft dit niet expliciet aan in hun prijzen overzicht.
     </p>
   </div>
