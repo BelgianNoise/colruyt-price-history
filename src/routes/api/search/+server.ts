@@ -55,16 +55,13 @@ export async function GET(event: RequestEvent): Promise<Response> {
     // words in the product name (and not just part of a word, similar to above)
     if (splitQuery.length > 1) {
       let aScore = 0;
+      let bScore = 0;
       for (const word of splitQuery) {
         const aaMatch = paddedA.match(`[^\\w-]${word}[^\\w-]`);
         if (aaMatch) aScore++;
-      }
-      let bScore = 0;
-      for (const word of splitQuery) {
         const bbMatch = paddedB.match(`[^\\w-]${word}[^\\w-]`);
         if (bbMatch) bScore++;
       }
-      console.log(aScore, bScore)
       return bScore - aScore;
     }
 
