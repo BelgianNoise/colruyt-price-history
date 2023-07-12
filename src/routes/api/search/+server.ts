@@ -6,7 +6,8 @@ export async function GET(event: RequestEvent): Promise<Response> {
 
   const query = event.url.searchParams.get('query');
   if (!query) return json([], { status: 400 });
-  const splitQuery = query.split(' ');
+  const lowerCaseQuery = query.toLowerCase();
+  const splitQuery = lowerCaseQuery.split(' ');
 
   const result = await dbPool.query(`
     SELECT p.*, pr.id as price_id, pr.*, p.id
@@ -32,12 +33,22 @@ export async function GET(event: RequestEvent): Promise<Response> {
         LIMIT 1
       )
     LIMIT 100
-  `, [ query, ...splitQuery ]);
+  `, [ lowerCaseQuery, ...splitQuery ]);
 
   const products: Product[] = result.rows.map((row) => parseToProduct(row));
   const sorted = products.sort((a, b) => {
-    if (a.longName.toLowerCase().includes(query.toLowerCase())) return -1;
-    if (b.longName.toLowerCase().includes(query.toLowerCase())) return 1;
+    // Put products that contain the exact match first
+    if (a.longName.toLowerCase().includes(lowerCaseQuery)) return -1;
+    if (b.longName.toLowerCase().includes(lowerCaseQuery)) return 1;
+    return 0;
+  }).sort((a, b) => {
+    // put products first where the query is not part of a different word
+    const paddedA = ` ${a.longName.toLowerCase()} `;
+    const m = paddedA.match(`[^a-z]${lowerCaseQuery}[^a-z]`);
+    if (m) return -1;
+    const paddedB = ` ${b.longName.toLowerCase()} `;
+    const n = paddedB.match(`[^a-z]${lowerCaseQuery}[^a-z]`);
+    if (n) return 1;
     return 0;
   });
 
