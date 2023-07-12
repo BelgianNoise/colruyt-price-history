@@ -44,11 +44,30 @@ export async function GET(event: RequestEvent): Promise<Response> {
   }).sort((a, b) => {
     // put products first where the query is not part of a different word
     const paddedA = ` ${a.longName.toLowerCase()} `;
-    const m = paddedA.match(`[^\\w-]${lowerCaseQuery}[^\\w-]`);
-    if (m) return -1;
+    const aMatch = paddedA.match(`[^\\w-]${lowerCaseQuery}[^\\w-]`);
+    if (aMatch) return -1;
     const paddedB = ` ${b.longName.toLowerCase()} `;
-    const n = paddedB.match(`[^\\w-]${lowerCaseQuery}[^\\w-]`);
-    if (n) return 1;
+    const bMatch = paddedB.match(`[^\\w-]${lowerCaseQuery}[^\\w-]`);
+    if (bMatch) return 1;
+
+    // if there are multiple words in the query string,
+    // put products first for which the multiple words are actual
+    // words in the product name (and not just part of a word, similar to above)
+    if (splitQuery.length > 1) {
+      let aScore = 0;
+      for (const word of splitQuery) {
+        const aaMatch = paddedA.match(`[^\\w-]${word}[^\\w-]`);
+        if (aaMatch) aScore++;
+      }
+      let bScore = 0;
+      for (const word of splitQuery) {
+        const bbMatch = paddedB.match(`[^\\w-]${word}[^\\w-]`);
+        if (bbMatch) bScore++;
+      }
+      console.log(aScore, bScore)
+      return bScore - aScore;
+    }
+
     return 0;
   });
 
