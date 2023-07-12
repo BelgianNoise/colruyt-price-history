@@ -1,5 +1,7 @@
-import { Pool } from 'pg';
 import { DB_HOST, DB_PORT, DB_PASSWORD, DB_USERNAME, DB_DATABASE } from '$env/static/private';
+
+import pg from 'pg';
+const { Pool } = pg;
 
 export const dbPool = new Pool({
   host: DB_HOST,
