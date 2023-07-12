@@ -5,6 +5,10 @@
   // Setup chart.js to use globally
   import { Chart, registerables } from 'chart.js';
   Chart.register(...registerables);
+  // Setup Vercel Analytics
+  import { dev } from '$app/environment';
+  import { inject } from '@vercel/analytics';
+  inject({ mode: dev ? 'development' : 'production' });
 </script>
 
 <div id="container">
