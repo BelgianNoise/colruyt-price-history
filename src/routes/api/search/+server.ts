@@ -44,10 +44,10 @@ export async function GET(event: RequestEvent): Promise<Response> {
   }).sort((a, b) => {
     // put products first where the query is not part of a different word
     const paddedA = ` ${a.longName.toLowerCase()} `;
-    const m = paddedA.match(`[^a-z]${lowerCaseQuery}[^a-z]`);
+    const m = paddedA.match(`[^\\w-]${lowerCaseQuery}[^\\w-]`);
     if (m) return -1;
     const paddedB = ` ${b.longName.toLowerCase()} `;
-    const n = paddedB.match(`[^a-z]${lowerCaseQuery}[^a-z]`);
+    const n = paddedB.match(`[^\\w-]${lowerCaseQuery}[^\\w-]`);
     if (n) return 1;
     return 0;
   });
