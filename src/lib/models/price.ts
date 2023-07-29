@@ -6,6 +6,7 @@ export interface Price {
   recommendedQuantity: string;
   promotion: string;
   time: string;
+  isPriceAvailable?: boolean;
 }
 
 export const parseToPrice = (input: Record<string, any>): Price => ({
@@ -17,11 +18,13 @@ export const parseToPrice = (input: Record<string, any>): Price => ({
   // some data has promotion as NULL, mistakes were made
   promotion: input.promotion === 'NULL' ? '' : input.promotion,
   time: input.time,
+  isPriceAvailable: input.is_price_available,
 });
 
 export const parsePriceToString = (price: Price | number): string => {
   let numPrice: number;
   if (typeof price === 'object') {
+    if (price.isPriceAvailable === false) return 'N/A';
     numPrice = price.basicPrice;
   } else {
     numPrice = price;
