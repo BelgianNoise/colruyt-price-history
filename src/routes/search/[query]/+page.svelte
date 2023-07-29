@@ -1,6 +1,6 @@
 <script lang="ts">
   import ProductCard from "$lib/components/product-card.svelte";
-    import { parsePriceToString } from "$lib/models/price";
+  import { parsePriceToString } from "$lib/models/price";
   import type { SearchLoadResults } from "./+page.server";
 
   export let data: SearchLoadResults;
