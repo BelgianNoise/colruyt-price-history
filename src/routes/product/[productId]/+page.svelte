@@ -4,6 +4,8 @@
   import type { ProductLoadResults } from "./+page.server";
 
   export let data: ProductLoadResults;
+
+  $: filteredPrices = data.prices.filter(price => price.isPriceAvailable);
 </script>
 
 {#if data.product}
@@ -52,8 +54,8 @@
         <span>{data.product.isAvailable ? 'Ja' : 'Neen'}</span>
       </div>
     </div>
-    {#if data.prices.length > 2}
-      <PricesHistory prices={data.prices} />
+    {#if filteredPrices.length > 2}
+      <PricesHistory prices={filteredPrices} />
     {:else}
       <p id="not-enough-data">
         Voor dit product hebben we niet genoeg data om een
