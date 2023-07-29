@@ -1,6 +1,6 @@
 <script lang="ts">
   import ProductCard from "$lib/components/product-card.svelte";
-  import { parsePriceToString } from "$lib/models/price";
+  import { parsePriceToString, parseUnitToString } from "$lib/models/price";
   import type { SearchLoadResults } from "./+page.server";
 
   export let data: SearchLoadResults;
@@ -15,7 +15,13 @@
       {#each data.products as product}
         <ProductCard product={product}>
           <div slot="footer">
-            <span id="price">{parsePriceToString(product.price)}</span>
+            <span id="price">
+              {parsePriceToString(product.price)}
+              {product.weightconversionFactor !== '0'
+                ? ` / ${parseUnitToString(product.price)}`
+                : ''
+              }
+            </span>
           </div>
         </ProductCard>
       {/each}
