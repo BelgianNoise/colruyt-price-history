@@ -1,7 +1,7 @@
 <div id="footer">
   <span>
     Bekijk de website op
-    <a href="https://github.com/TODO" target="_blank">Github</a>
+    <a href="https://github.com/BelgianNoise/colruyt-price-history" target="_blank">Github</a>
   </span>
   <span id="disclaimer">
     Deze website is niet gelieerd aan Colruyt of Colruyt Group. De prijzen zijn
