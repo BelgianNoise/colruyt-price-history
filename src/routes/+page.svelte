@@ -2,15 +2,18 @@
   import type { RootLoadResults } from "./+page.server";
   import PriceChangeCard from "$lib/components/price-change-card.svelte";
   import InfoSVG from "$lib/svgs/info.svelte";
+
   export let data: RootLoadResults;
   let screenSize: number;
+  let showAllIncreases = false;
+  let showAllDecreases = false;
 
   $: priceChanges = data.priceChanges.sort((a, b) => b.priceChangePercentage - a.priceChangePercentage);
   $: showAmount = screenSize > 900 ? 8 : 6;
-  $: increases = priceChanges.slice(0, showAmount).filter(priceChange => priceChange.priceChangePercentage > 0);
-  $: decreases = priceChanges
-    .slice(priceChanges.length - showAmount, priceChanges.length)
-    .filter(priceChange => priceChange.priceChangePercentage < 0)
+  $: increases = (showAllIncreases ? priceChanges : priceChanges.slice(0, showAmount))
+    .filter(priceChange => priceChange.priceChangePercentage > 0.01);
+  $: decreases = (showAllDecreases ? priceChanges : priceChanges.slice(priceChanges.length - showAmount, priceChanges.length))
+    .filter(priceChange => priceChange.priceChangePercentage < -0.01)
     .reverse();
 
 </script>
@@ -42,6 +45,13 @@
         <PriceChangeCard priceChange={increase} />
       {/each}
     </div>
+    <button on:click={() => showAllIncreases = !showAllIncreases} class="expand-button">
+      {#if showAllIncreases}
+        Toon minder
+      {:else}
+        Toon alles
+      {/if}
+    </button>
   {/if}
   
   <div class="header">
@@ -59,6 +69,13 @@
         <PriceChangeCard priceChange={decrease} />
       {/each}
     </div>
+    <button on:click={() => showAllDecreases = !showAllDecreases} class="expand-button">
+      {#if showAllDecreases}
+        Toon minder
+      {:else}
+        Toon alles
+      {/if}
+    </button>
   {/if}
 
 </div>
@@ -79,5 +96,14 @@
   }
   .tooltip-container {
     float: right;
+  }
+
+  .expand-button {
+    padding: var(--m-normal);
+    border: 2px solid var(--color-colruyt);
+    color: var(--color-colruyt);
+    margin: 0 auto;
+    margin-top: var(--m-normal);
+    display: block;
   }
 </style>
