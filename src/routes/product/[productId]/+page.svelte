@@ -52,6 +52,8 @@
         <span>{data.product.isBiffe ? 'Ja' : 'Neen'}</span> -->
         <span class="info-grid-item-title">beschikbaar:</span>
         <span>{data.product.isAvailable ? 'Ja' : 'Neen'}</span>
+        <span class="info-grid-item-title"><!-- EMPTY --></span>
+        <span><a target="_blank" referrerpolicy="no-referrer" href="https://www.colruyt.be/nl/producten/{data.product.commercialArticleNumber}">bekijk op colruyt.be</a></span>
       </div>
     </div>
     {#if filteredPrices.length > 2}
