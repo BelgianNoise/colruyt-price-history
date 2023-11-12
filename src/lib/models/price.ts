@@ -46,6 +46,7 @@ export const parseUnitToString = (price: Price | string): string => {
     case 'K': return 'kg';
     case 'L': return 'l';
     case 'S': return 'stuk';
+    case 'D': return 'dosis';
     default: return unit;
   }
 };
