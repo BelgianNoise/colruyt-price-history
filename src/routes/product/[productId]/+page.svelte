@@ -66,9 +66,9 @@
             </div>
             <div class="promo-dates">
               <p>
-                {new Date(promo.startDate).getDate()}/{new Date(promo.startDate).getMonth()}
+                {new Date(promo.startDate).getDate()}/{new Date(promo.startDate).getMonth()+1}
                 -
-                {new Date(promo.endDate).getDate()}/{new Date(promo.endDate).getMonth()}
+                {new Date(promo.endDate).getDate()}/{new Date(promo.endDate).getMonth()+1}
               </p>
             </div>
           </div>
