@@ -7,6 +7,7 @@ export interface Price {
   promotion: string;
   time: string;
   isPriceAvailable?: boolean;
+  promoCodes: string;
 }
 
 export const parseToPrice = (input: Record<string, any>): Price => ({
@@ -19,6 +20,7 @@ export const parseToPrice = (input: Record<string, any>): Price => ({
   promotion: input.promotion === 'NULL' ? '' : input.promotion,
   time: input.time,
   isPriceAvailable: input.is_price_available,
+  promoCodes: input.promo_codes,
 });
 
 export const parsePriceToString = (price: Price | number): string => {

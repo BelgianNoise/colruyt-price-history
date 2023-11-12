@@ -2,10 +2,12 @@ import type { Product } from '$lib/models/product';
 import type { ServerLoadEvent } from '@sveltejs/kit';
 import { BASE_URL } from '$env/static/private';
 import type { Price } from '$lib/models/price';
+import type { Promotion } from '$lib/models/promotion';
 
 export interface ProductLoadResults {
   product: Product | undefined;
   prices: Price[];
+  promotions: Promotion[];
 }
 
 type ProductLoadParams = {
@@ -18,6 +20,7 @@ export async function load(
 
   let product: Product | undefined = undefined;
   let prices: Price[] = [];
+  let promotions: Promotion[] = [];
 
   try {
     const url = new URL(`/api/product`, BASE_URL);
@@ -28,10 +31,11 @@ export async function load(
     const result = await response.json();
     product = result.product;
     prices = result.prices;
+    promotions = result.promotions;
 
   } catch (error) {
     console.error(error);
   }
   
-	return { product, prices };
+	return { product, prices, promotions };
 }

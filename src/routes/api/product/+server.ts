@@ -1,5 +1,6 @@
 import { parseToPrice, type Price } from "$lib/models/price";
 import { parseToProduct, type Product } from "$lib/models/product";
+import { parseToPromotion, type Promotion } from "$lib/models/promotion";
 import { dbPool } from "$lib/server/db";
 import { json, type RequestEvent } from "@sveltejs/kit";
 
@@ -35,8 +36,22 @@ export async function GET(event: RequestEvent): Promise<Response> {
 
   const prices: Price[] = pricesResult.rows.map((row) => parseToPrice(row));
 
+  let promotions: Promotion[] = [];
+
+  if (prices.length > 0 && prices[0].promoCodes?.length > 0) {
+    const promotionIds = prices[0].promoCodes.split(',').map((code) => code.trim());
+    const promotionResult = await dbPool.query(`
+      SELECT *
+      FROM products.promotion
+      WHERE promotion_id ILIKE ANY($1)
+    `, [ promotionIds ]);
+  
+    promotions = promotionResult.rows.map((row) => parseToPromotion(row));  
+  }
+
   return json({
     product: products[0],
     prices: prices,
+    promotions: promotions,
   });
 }

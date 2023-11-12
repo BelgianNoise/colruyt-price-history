@@ -56,6 +56,25 @@
         <span><a target="_blank" referrerpolicy="no-referrer" href="https://www.colruyt.be/nl/producten/{data.product.commercialArticleNumber}">bekijk op colruyt.be</a></span>
       </div>
     </div>
+    <div id="promos-container">
+      {#each data.promotions as promo}
+        {#each promo.benefits as benefit}
+          <div class="promo-container">
+            <div class="promo-detail">
+              <p class="promo-percentage">- {benefit.percentage}%</p>
+              <p>vanaf {benefit.minLimit} {parseUnitToString(benefit.unit)}</p>
+            </div>
+            <div class="promo-dates">
+              <p>
+                {new Date(promo.startDate).getDate()}/{new Date(promo.startDate).getMonth()}
+                -
+                {new Date(promo.endDate).getDate()}/{new Date(promo.endDate).getMonth()}
+              </p>
+            </div>
+          </div>
+        {/each}
+      {/each}
+    </div>
     {#if filteredPrices.length > 2}
       <PricesHistory prices={filteredPrices} />
     {:else}
@@ -122,6 +141,38 @@
     padding: var(--m-tiny) var(--m-small);
     font-size: var(--font-size-tiny);
     font-weight: bold;
+  }
+  #promos-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--m-normal);
+    flex-wrap: wrap;
+  }
+  .promo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--m-tiny);
+    background-color: var(--color-background-dark);
+    padding: var(--m-normal);
+    border-radius: var(--m-tiny);
+  }
+  .promo-container .promo-detail {
+    display: flex;
+    flex-direction: row;
+    gap: var(--m-small);
+    align-items: end;
+    justify-content: left;
+    color: var(--color-colruyt-red);
+  }
+  .promo-container .promo-percentage {
+    font-weight: bold;
+    font-size: var(--font-size-huge);
+  }
+  .promo-container .promo-dates {
+    color: var(--color-foreground-light);
+    font-size: var(--font-size-tiny);
   }
   @media (min-width: 700px) {
     #info-panel {

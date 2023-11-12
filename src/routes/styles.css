@@ -3,7 +3,8 @@
   --color-colruyt-red: #D0021B;
   --color-background: #fff;
   --color-background-light: #fff;
-  --color-background-dark: #e6e6e6;
+  --color-background-dark: #f0f0f0;
+  --color-background-darker: #e6e6e6;
   --color-foreground: #111;
   --color-foreground-light: #333;
 
@@ -18,6 +19,7 @@
   --font-size-small: 1rem;
   --font-size-normal: 1.2rem;
   --font-size-large: 1.6rem;
+  --font-size-huge: 1.8rem;
 }
 
 html {
