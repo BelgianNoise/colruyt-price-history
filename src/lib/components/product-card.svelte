@@ -21,7 +21,7 @@
     <img src={product.squareImage} alt="product" loading="lazy">
     <span id="product-name">{name}</span>
     <span>{product.content}</span>
-    {#if product.price.promotion}
+    {#if product.price.promotion || product.price.quantityPriceQuantity}
       <span id="promo">Actie</span>
     {/if}
   </div>

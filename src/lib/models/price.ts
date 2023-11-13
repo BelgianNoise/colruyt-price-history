@@ -1,5 +1,7 @@
 export interface Price {
   basicPrice: number;
+  quantityPrice: number;
+  quantityPriceQuantity: string;
   isRedPrice: boolean;
   measurementUnit: string;
   measurementUnitPrice: number;
@@ -12,6 +14,8 @@ export interface Price {
 
 export const parseToPrice = (input: Record<string, any>): Price => ({
   basicPrice: input.basic_price,
+  quantityPrice: input.quantity_price,
+  quantityPriceQuantity: input.quantity_price_quantity,
   isRedPrice: input.is_red_price,
   measurementUnit: input.measurement_unit,
   measurementUnitPrice: input.measurement_unit_price,

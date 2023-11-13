@@ -11,7 +11,7 @@
 {#if data.product}
   <div id="content">
     <div id="info-panel">
-      {#if data.product.price.promotion}
+      {#if data.product.price.promotion || filteredPrices[0]?.quantityPriceQuantity}
         <span id="promo">Actie</span>
       {/if}
       <img src={data.product.squareImage} alt="product">
@@ -74,6 +74,14 @@
           </div>
         {/each}
       {/each}
+      {#if filteredPrices[0]?.quantityPriceQuantity }
+        <div class="promo-container">
+          <div class="promo-detail">
+            <p class="promo-percentage">€ {Number(filteredPrices[0].quantityPrice)}</p>
+            <p>vanaf {Number(filteredPrices[0].quantityPriceQuantity)} {parseUnitToString(filteredPrices[0].measurementUnit)}</p>
+          </div>
+        </div>
+      {/if}
     </div>
     {#if filteredPrices.length > 2}
       <PricesHistory prices={filteredPrices} />
@@ -156,7 +164,7 @@
     gap: var(--m-tiny);
     background-color: var(--color-background-dark);
     padding: var(--m-normal);
-    border-radius: var(--m-tiny);
+    border-radius: var(--m-small);
   }
   .promo-container .promo-detail {
     display: flex;
