@@ -10,7 +10,19 @@
 
   $: name = 
     product.longName.charAt(0).toUpperCase() +
-    product.longName.slice(1).replaceAll(/([&\.])/gim, ' $1 ')
+    product.longName
+      .slice(1)
+      // the following line adds a space before every &, . or + character
+      .replaceAll(/([&\.\+])/gim, ' $1 ')
+      // split words that are longer then 15 characters
+      .split(" ")
+      .reduce((acc, word) => {
+        if (word.length > 15) {
+          return acc + word.replace(/(.{15})/g, "$1- ");
+        }
+        return acc + word + " ";
+      }, "")
+      
 </script>
 
 <Card
