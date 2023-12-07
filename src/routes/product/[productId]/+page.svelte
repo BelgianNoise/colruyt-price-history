@@ -4,7 +4,7 @@
   import type { ProductLoadResults } from "./+page.server";
 
   export let data: ProductLoadResults;
-
+  console.log(data);
   $: filteredPrices = data.prices.filter(price => price.isPriceAvailable);
 </script>
 
@@ -78,7 +78,7 @@
         <div class="promo-container">
           <div class="promo-detail">
             <p class="promo-percentage">€ {Number(filteredPrices[0].quantityPrice)}</p>
-            <p>vanaf {Number(filteredPrices[0].quantityPriceQuantity)} {parseUnitToString(filteredPrices[0].measurementUnit)}</p>
+            <p>vanaf {Number(filteredPrices[0].quantityPriceQuantity)} {parseUnitToString(data.product.isWeightArticle ? 'K' : 'S')}</p>
           </div>
         </div>
       {/if}
