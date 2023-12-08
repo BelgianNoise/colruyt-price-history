@@ -1,20 +1,23 @@
 <script lang="ts">
   import type { RootLoadResults } from "./+page.server";
+  import { slide } from 'svelte/transition';
   import PriceChangeCard from "$lib/components/price-change-card.svelte";
   import InfoSVG from "$lib/svgs/info.svelte";
+  import ChevronDownSVG from "$lib/svgs/chevron-down.svelte";
+  import { onMount } from 'svelte';
 
   export let data: RootLoadResults;
   let screenSize: number;
-  let showAllIncreases = false;
-  let showAllDecreases = false;
+  let showIncreases = false;
+  let showDecreases = false;
+  let showPP = false;
+  let ready = false;
+  onMount(() => ready = true);
 
-  $: priceChanges = data.priceChanges.sort((a, b) => b.priceChangePercentage - a.priceChangePercentage);
   $: showAmount = screenSize > 900 ? 8 : 6;
-  $: increases = (showAllIncreases ? priceChanges : priceChanges.slice(0, showAmount))
-    .filter(priceChange => priceChange.priceChangePercentage > 0.01);
-  $: decreases = (showAllDecreases ? priceChanges : priceChanges.slice(priceChanges.length - showAmount, priceChanges.length))
-    .filter(priceChange => priceChange.priceChangePercentage < -0.01)
-    .reverse();
+  $: increases = data.ss.slice(0, showAmount);
+  $: decreases = data.dd.slice(0, showAmount);
+  $: showPP = ready
 
 </script>
 
@@ -22,62 +25,103 @@
 
 <div id="content">
 
-  <div class="tooltip-container">
+  <!-- <div class="tooltip-container">
     <InfoSVG />
     <p class="tooltip">
       Deze data kan prijsveranderingen door andere winkelketens bevatten.<br/>
-      Colruyt geeft dit niet expliciet aan in hun prijzen overzicht.
+      Colruyt geeft dit niet expliciet aan in hun prijzen overzicht.<br/>
+      De 'Prettige Prijzen' worden enkele keren per dag opnieuw berekend.
     </p>
-  </div>
+  </div> -->
 
-  <div class="header">
+  <div class={`header ${showPP ? 'open' : ''}`} role="button" tabindex="0"
+    on:click={() => showPP = !showPP}
+    on:keydown={(e) => {if (e.key === "Enter") showPP = !showPP}}
+  >
+  <h2>Prettige Prijzen</h2>
+  <span>Hoogste kortingen op dit moment</span>
+    <div class={`drop-down-icon ${showPP ? 'flip' : ''}`}>
+      <ChevronDownSVG />
+    </div>
+  </div>
+  {#if showPP}
+    <div class="list-container"
+      in:slide={{ duration: 500 }}
+      out:slide={{ duration: 500 }}
+    >
+      {#if increases.length === 0}
+        <p>
+          Door een foutje op de server kunnen er voor
+          vandaag geen resulaten worden weergegeven
+        </p>
+      {:else}
+        <p>TODO</p>
+        <a class="link" href="/pp">Toon Alles</a>
+      {/if}
+    </div>
+  {/if}
+
+  <div class={`header ${showIncreases ? 'open' : ''}`} role="button" tabindex="0"
+    on:click={() => showIncreases = !showIncreases}
+    on:keydown={(e) => {if (e.key === "Enter") showIncreases = !showIncreases}}
+  >
     <h2>Sterkste stijgers</h2>
     <span>van vandaag</span>
-  </div>
-  {#if increases.length === 0}
-    <p>
-      Door een foutje op de server kunnen er voor
-      vandaag geen resulaten worden weergegeven
-    </p>
-  {:else}
-    <div class="grid-container">
-      {#each increases as increase}
-        <PriceChangeCard priceChange={increase} />
-      {/each}
+    <div class={`drop-down-icon ${showIncreases ? 'flip' : ''}`}>
+      <ChevronDownSVG />
     </div>
-    <button on:click={() => showAllIncreases = !showAllIncreases} class="expand-button">
-      {#if showAllIncreases}
-        Toon minder
+  </div>
+  {#if showIncreases}
+    <div class="list-container"
+      in:slide={{ duration: 500 }}
+      out:slide={{ duration: 500 }}
+    >
+      {#if increases.length === 0}
+        <p>
+          Door een foutje op de server kunnen er voor
+          vandaag geen resulaten worden weergegeven
+        </p>
       {:else}
-        Toon alles
+        <div class="grid-container">
+          {#each increases as increase}
+            <PriceChangeCard priceChange={increase} />
+          {/each}
+        </div>
+        <a class="link" href="/ss">Toon Alles</a>
       {/if}
-    </button>
+    </div>
   {/if}
   
-  <div class="header">
+  <div class={`header ${showDecreases ? 'open' : ''}`} role="button" tabindex="0"
+    on:click={() => showDecreases = !showDecreases}
+    on:keydown={(e) => {if (e.key === "Enter") showDecreases = !showDecreases}}
+  >
     <h2>Drastische dalers</h2>
     <span>van vandaag</span>
-  </div>
-  {#if decreases.length === 0}
-    <p>
-      Door een foutje op de server kunnen er voor
-      vandaag geen resulaten worden weergegeven
-    </p>
-  {:else}
-    <div class="grid-container">
-      {#each decreases as decrease}
-        <PriceChangeCard priceChange={decrease} />
-      {/each}
+    <div class={`drop-down-icon ${showIncreases ? 'flip' : ''}`}>
+      <ChevronDownSVG />
     </div>
-    <button on:click={() => showAllDecreases = !showAllDecreases} class="expand-button">
-      {#if showAllDecreases}
-        Toon minder
+  </div>
+  {#if showDecreases}
+    <div class="list-container"
+      in:slide={{ duration: 500 }}
+      out:slide={{ duration: 500 }}
+    >
+      {#if decreases.length === 0}
+        <p>
+          Door een foutje op de server kunnen er voor
+          vandaag geen resulaten worden weergegeven
+        </p>
       {:else}
-        Toon alles
+        <div class="grid-container">
+          {#each decreases as decrease}
+            <PriceChangeCard priceChange={decrease} />
+          {/each}
+        </div>
+        <a class="link" href="/dd">Toon Alles</a>
       {/if}
-    </button>
+    </div>
   {/if}
-
 </div>
 
 <style>
@@ -85,8 +129,18 @@
     position: relative;
   }
   .header {
-    margin: var(--m-small);
-    padding: var(--m-small);
+    position: relative;
+    margin-top: var(--m-small);
+    padding: var(--m-normal);
+    cursor: pointer;
+    background-color: var(--color-background-dark);
+    border-radius: var(--m-small);
+    border: 1px solid var(--color-foreground-light);
+  }
+  .header.open {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: none;
   }
   .header h2 {
     display: inline-block;
@@ -95,15 +149,39 @@
     font-size: var(--font-size-tiny);
   }
   .tooltip-container {
-    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 
-  .expand-button {
-    padding: var(--m-normal);
+  .list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .link {
+    padding: var(--m-normal) var(--m-large);
     border: 2px solid var(--color-colruyt);
+    border-radius: var(--m-large);
     color: var(--color-colruyt);
-    margin: 0 auto;
     margin-top: var(--m-normal);
-    display: block;
+    display: inline-block;
+    text-decoration: none;
+  }
+  .link:hover {
+    background-color: var(--color-colruyt-lighter);
+  }
+
+  .drop-down-icon.flip {
+    transform: rotate(180deg) translateY(50%);
+  }
+  .drop-down-icon {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: var(--m-normal);
+    top: 50%;
+    transform: translateY(-50%);
+    transition: transform 0.2s;
   }
 </style>

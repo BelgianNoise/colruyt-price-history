@@ -41,6 +41,6 @@
     cursor: pointer;
   }
   .pointer:hover {
-    background: rgba(255, 240, 210, 0.95) !important;
+    background-color: var(--color-colruyt-lighter)!important;
   }
 </style>

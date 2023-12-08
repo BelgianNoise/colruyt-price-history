@@ -1,44 +1,83 @@
 import type { ServerLoadEvent } from '@sveltejs/kit';
 import { Storage } from '@google-cloud/storage';
-import type { PriceChange } from '$lib/models/price-change';
+import type { PriceChange, PriceChangeGCSDOCDORMAT } from '$lib/models/price-change';
+import type { PP, PPGCSDOCDORMAT } from '$lib/models/pp';
 
 export interface RootLoadResults {
-  priceChanges: PriceChange[];
+  pp: PP[];
+  ss: PriceChange[];
+  dd: PriceChange[];
 }
 
 export async function load(
   event: ServerLoadEvent<object, Omit<unknown, never>, '/search/[query]'>,
 ): Promise<RootLoadResults> {
-
-  try {
-    const storage = new Storage();
-    const [ bucketItems ] = await storage.bucket('colruyt-products').getFiles({ prefix: 'price-changes/' });
-    const filesReversed = bucketItems.reverse();
-    // check if file is from today or yesterday (to bridge the time it takes to run the workflow)
-    const today = new Date();
-    const yesterday = new Date(new Date().setDate(today.getDate() - 1));
-    const selectedFile = filesReversed.find((file) => {
-      const fileDate = new Date(file.metadata.updated);
-      if (fileDate.toDateString() === today.toDateString()
-        || fileDate.toDateString() === yesterday.toDateString()) {
-          return true;
-      }
-      return false;
-    });
-    if (!selectedFile) throw new Error('No file found');
-    const [ fileContent ] = await selectedFile.download();
-    const fileContentString = fileContent.toString();
-    const fileContentJson: any[] = JSON.parse(fileContentString);
-    const parsedList: PriceChange[] = fileContentJson.map((item) => ({
-      ... item,
-      thumbnail: item.thumbNail,
-      id: item.productId,
-    }));
-    return { priceChanges: parsedList };
-
-  } catch (e) {
+  let pp: PP[] = [];
+  try { pp = await getPP() } catch (e) {
+    console.error('An error occured', e);
+  }
+  let ss: PriceChange[] = [];
+  try { ss = await getSS() } catch (e) {
+    console.error('An error occured', e);
+  }
+  let dd: PriceChange[] = [];
+  try { dd = await getDD() } catch (e) {
     console.error('An error occured', e);
   }
 
-  return { priceChanges: [] };
+  return { pp, ss, dd };
+}
+
+async function getPP(): Promise<PP[]> {
+  try {
+    const storage = new Storage();
+    const bucket = storage.bucket('colruyt-products');
+    const file = bucket.file('prettige-prijzen/pp-short.json');
+    const [ fileContent ] = await file.download();
+    const fileString = fileContent.toString();
+    const fileJson: PPGCSDOCDORMAT = JSON.parse(fileString);
+    if (fileJson.date.getTime() < new Date().getTime() - 24 * 60 * 60 * 1000) {
+      return [];
+    }
+    return fileJson.pps;
+  } catch (e) {
+    console.error('An error occured', e);
+    return [];
+  }
+}
+
+async function getSS(): Promise<PriceChange[]> {
+  try {
+    const storage = new Storage();
+    const bucket = storage.bucket('colruyt-products');
+    const file = bucket.file('sterkste-stijgers/ss-short.json');
+    const [ fileContent ] = await file.download();
+    const fileString = fileContent.toString();
+    const fileJson: PriceChangeGCSDOCDORMAT = JSON.parse(fileString);
+    if (fileJson.date.getTime() < new Date().getTime() - 24 * 60 * 60 * 1000) {
+      return [];
+    }
+    return fileJson.priceChanges;
+  } catch (e) {
+    console.error('An error occured', e);
+    return [];
+  }
+}
+
+async function getDD(): Promise<PriceChange[]> {
+  try {
+    const storage = new Storage();
+    const bucket = storage.bucket('colruyt-products');
+    const file = bucket.file('drastische-dalers/dd-short.json');
+    const [ fileContent ] = await file.download();
+    const fileString = fileContent.toString();
+    const fileJson: PriceChangeGCSDOCDORMAT = JSON.parse(fileString);
+    if (fileJson.date.getTime() < new Date().getTime() - 24 * 60 * 60 * 1000) {
+      return [];
+    }
+    return fileJson.priceChanges;
+  } catch (e) {
+    console.error('An error occured', e);
+    return [];
+  }
 }

@@ -27,6 +27,7 @@
   }
   #slot-container {
     flex: 1;
+    width: calc(100vw - 2 * var(--m-small));
     max-width: 1000px !important;
     margin: auto;
     padding: var(--m-small);
@@ -35,6 +36,7 @@
   @media (min-width: 650px) {
     #slot-container {
       padding: var(--m-normal) var(--m-large);
+      width: calc(100vw - 2 * var(--m-large));
     }
   }
 </style>

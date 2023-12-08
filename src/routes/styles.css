@@ -1,5 +1,7 @@
 :root {
   --color-colruyt: #F5822A;
+  --color-colruyt-light: #ffc89e;
+  --color-colruyt-lighter: #ffeadb;
   --color-colruyt-red: #D0021B;
   --color-background: #fff;
   --color-background-light: #fff;
@@ -7,6 +9,7 @@
   --color-background-darker: #e6e6e6;
   --color-foreground: #111;
   --color-foreground-light: #333;
+  --color-foreground-inverse: #fff;
 
   --m-tiny: 5px;
   --m-small: 10px;
@@ -56,12 +59,12 @@ a {
 
 .tooltip-container {
   position: relative;
+  z-index: 10;
 }
 .tooltip {
   position: absolute;
   top: 100%;
   right: 0;
-  z-index: 2;
   padding: var(--m-normal);
   border-radius: 10px;
   border: 1px solid var(--color-background);

@@ -7,3 +7,8 @@ export interface PriceChange extends Product {
   involvesPromotion: boolean;
   oldPrice: Price;
 }
+
+export interface PriceChangeGCSDOCDORMAT {
+  date: Date;
+  priceChanges: PriceChange[];
+}

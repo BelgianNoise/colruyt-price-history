@@ -1,4 +1,7 @@
-<div id="footer">
+<script>
+  import { slide } from 'svelte/transition';
+</script>
+<div id="footer" in:slide={{ duration: 100 }}>
   <span>
     Bekijk de website op
     <a href="https://github.com/BelgianNoise/colruyt-price-history" target="_blank">Github</a>
