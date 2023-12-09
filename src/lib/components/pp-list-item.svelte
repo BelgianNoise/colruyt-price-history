@@ -72,8 +72,8 @@
     gap: var(--m-small);
   }
   .best-price {
-    font-size: 60px;
-    line-height: 60px;
+    font-size: 2.6rem;
+    line-height: 2.6rem;
     font-weight: bold;
     margin: 0;
     text-align: right;
@@ -82,15 +82,16 @@
   .diff {
     color: var(--color-foreground-inverse);
     background-color: var(--color-colruyt-red);
-    padding: 5px var(--m-small);
+    padding: 0.2rem var(--m-small);
     border-radius: var(--m-tiny);
-    font-size: 25px;
+    font-size: 1rem;
+    line-height: 1rem;
   }
   .quantity {
-    font-size: 15px;
-    line-height: 15px;
+    font-size: 0.8rem;
+    line-height: 0.8rem;
     color: var(--color-colruyt-red);
-    margin-top: 10px;
+    margin-top: 0.4rem;
     text-align: right;
   }
 
