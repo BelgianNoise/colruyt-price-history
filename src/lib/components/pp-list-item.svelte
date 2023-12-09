@@ -9,7 +9,6 @@
 
   const calcQuantity = () => {
     try {
-      console.log(pp.benefit)
       const qpq = pp.quantityPriceQuantity ? Number(pp.quantityPriceQuantity) : 1;
       const bqStrings = pp.benefit ? pp.benefit.split(",").map(b => b.split("_")[1]) : [ 1 ];
       const bq = Math.max(...bqStrings.map(b => Number(b)));

@@ -4,7 +4,6 @@
   import type { ProductLoadResults } from "./+page.server";
 
   export let data: ProductLoadResults;
-  console.log(data);
   $: filteredPrices = data.prices.filter(price => price.isPriceAvailable);
 </script>
 
