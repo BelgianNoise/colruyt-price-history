@@ -2,6 +2,7 @@
   import type { RootLoadResults } from "./+page.server";
   import { slide } from 'svelte/transition';
   import PriceChangeCard from "$lib/components/price-change-card.svelte";
+  import PPList from "$lib/components/pp-list.svelte";
   import InfoSVG from "$lib/svgs/info.svelte";
   import ChevronDownSVG from "$lib/svgs/chevron-down.svelte";
   import { onMount } from 'svelte';
@@ -55,8 +56,39 @@
           vandaag geen resulaten worden weergegeven
         </p>
       {:else}
-        <p>TODO</p>
+        <PPList pps={data.pp} />
         <a class="link" href="/pp">Toon Alles</a>
+      {/if}
+    </div>
+  {/if}
+
+  <div class={`header ${showDecreases ? 'open' : ''}`} role="button" tabindex="0"
+    on:click={() => showDecreases = !showDecreases}
+    on:keydown={(e) => {if (e.key === "Enter") showDecreases = !showDecreases}}
+  >
+    <h2>Drastische dalers</h2>
+    <span>van vandaag</span>
+    <div class={`drop-down-icon ${showIncreases ? 'flip' : ''}`}>
+      <ChevronDownSVG />
+    </div>
+  </div>
+  {#if showDecreases}
+    <div class="list-container"
+      in:slide={{ duration: 500 }}
+      out:slide={{ duration: 500 }}
+    >
+      {#if decreases.length === 0}
+        <p>
+          Door een foutje op de server kunnen er voor
+          vandaag geen resulaten worden weergegeven
+        </p>
+      {:else}
+        <div class="grid-container">
+          {#each decreases as decrease}
+            <PriceChangeCard priceChange={decrease} />
+          {/each}
+        </div>
+        <a class="link" href="/dd">Toon Alles</a>
       {/if}
     </div>
   {/if}
@@ -91,37 +123,6 @@
       {/if}
     </div>
   {/if}
-  
-  <div class={`header ${showDecreases ? 'open' : ''}`} role="button" tabindex="0"
-    on:click={() => showDecreases = !showDecreases}
-    on:keydown={(e) => {if (e.key === "Enter") showDecreases = !showDecreases}}
-  >
-    <h2>Drastische dalers</h2>
-    <span>van vandaag</span>
-    <div class={`drop-down-icon ${showIncreases ? 'flip' : ''}`}>
-      <ChevronDownSVG />
-    </div>
-  </div>
-  {#if showDecreases}
-    <div class="list-container"
-      in:slide={{ duration: 500 }}
-      out:slide={{ duration: 500 }}
-    >
-      {#if decreases.length === 0}
-        <p>
-          Door een foutje op de server kunnen er voor
-          vandaag geen resulaten worden weergegeven
-        </p>
-      {:else}
-        <div class="grid-container">
-          {#each decreases as decrease}
-            <PriceChangeCard priceChange={decrease} />
-          {/each}
-        </div>
-        <a class="link" href="/dd">Toon Alles</a>
-      {/if}
-    </div>
-  {/if}
 </div>
 
 <style>
@@ -132,6 +133,7 @@
     position: relative;
     margin-top: var(--m-small);
     padding: var(--m-normal);
+    padding-right: var(--m-huge);
     cursor: pointer;
     background-color: var(--color-background-dark);
     border-radius: var(--m-small);

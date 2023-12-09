@@ -8,7 +8,7 @@ export interface PriceChange extends Product {
   oldPrice: Price;
 }
 
-export interface PriceChangeGCSDOCDORMAT {
-  date: Date;
-  priceChanges: PriceChange[];
+export interface PriceChangeGCSDOCFORMAT {
+  date: string;
+  data: PriceChange[];
 }

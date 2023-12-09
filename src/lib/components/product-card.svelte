@@ -5,7 +5,7 @@
   export let product: Product;
 
   const handleClick = () => {
-    window.location.href = `/product/${product.id}`;
+    window.location.href = `/product/${product.productId}`;
   };
 
   $: name = 

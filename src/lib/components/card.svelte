@@ -33,6 +33,8 @@
   }
   #header, #body, #footer {
     padding: var(--m-small) var(--m-normal);
+    overflow: hidden;
+    max-width: calc(100% - 2 * var(--m-normal));
   }
   .hide {
     display: none;

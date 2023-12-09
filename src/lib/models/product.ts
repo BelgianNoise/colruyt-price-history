@@ -1,7 +1,7 @@
 import { parseToPrice, type Price } from "./price";
 
 export interface Product {
-  id: string;
+  productId: string;
   name: string;
   longName: string;
   shortName: string;
@@ -34,7 +34,7 @@ export interface Product {
 }
 
 export const parseToProduct = (input: Record<string, any>): Product => ({
-  id: input.id,
+  productId: input.id,
   name: input.name,
   longName: input.long_name,
   shortName: input.short_name,
