@@ -49,7 +49,7 @@
 
 <style>
   .long-name {
-    font-size: 1rem;
+    font-size: var(--font-size-small);
     font-weight: bold;
     margin: 0;
     overflow: hidden;
@@ -110,7 +110,9 @@
   }
   div[slot="body"] > img {
     width: 100px;
+    max-width: 20%;
     height: 100px;
+    object-fit: contain;
   }
   div[slot="body"] > div {
     flex: 1;

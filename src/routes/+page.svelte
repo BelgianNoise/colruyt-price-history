@@ -39,7 +39,7 @@
     on:click={() => showPP = !showPP}
     on:keydown={(e) => {if (e.key === "Enter") showPP = !showPP}}
   >
-  <h2>Prettige Prijzen</h2>
+  <h3>Prettige Prijzen</h3>
   <span>Hoogste kortingen op dit moment</span>
     <div class={`drop-down-icon ${showPP ? 'flip' : ''}`}>
       <ChevronDownSVG />
@@ -66,7 +66,7 @@
     on:click={() => showDecreases = !showDecreases}
     on:keydown={(e) => {if (e.key === "Enter") showDecreases = !showDecreases}}
   >
-    <h2>Drastische dalers</h2>
+    <h3>Drastische dalers</h3>
     <span>van vandaag</span>
     <div class={`drop-down-icon ${showIncreases ? 'flip' : ''}`}>
       <ChevronDownSVG />
@@ -97,7 +97,7 @@
     on:click={() => showIncreases = !showIncreases}
     on:keydown={(e) => {if (e.key === "Enter") showIncreases = !showIncreases}}
   >
-    <h2>Sterkste stijgers</h2>
+    <h3>Sterkste stijgers</h3>
     <span>van vandaag</span>
     <div class={`drop-down-icon ${showIncreases ? 'flip' : ''}`}>
       <ChevronDownSVG />
@@ -144,7 +144,7 @@
     border-bottom-right-radius: 0;
     border-bottom: none;
   }
-  .header h2 {
+  .header h3 {
     display: inline-block;
   }
   .header span {
