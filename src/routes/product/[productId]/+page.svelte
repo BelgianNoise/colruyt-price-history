@@ -7,6 +7,10 @@
   $: filteredPrices = data.prices.filter(price => price.isPriceAvailable);
 </script>
 
+<svelte:head>
+  <meta name="description" content="{data.product?.longName}{data.prices.length ? `: €${data.prices[0].basicPrice}` : ''}" />
+</svelte:head>
+
 {#if data.product}
   <div id="content">
     <div id="info-panel">
