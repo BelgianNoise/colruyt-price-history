@@ -113,6 +113,7 @@
     max-width: 20%;
     aspect-ratio: 1/1;
     object-fit: contain;
+    align-self: center;
   }
   div[slot="body"] > div {
     flex: 1;
