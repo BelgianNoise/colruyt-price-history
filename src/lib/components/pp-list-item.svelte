@@ -34,11 +34,13 @@
     <img src={pp.squareImage} alt={pp.longName} loading="lazy"/>
     <div class="info-container">
       <div class="detail-info-container">
-        <div>
+        <div class="diff-container">
           <span class="diff">-{pp.diff}%</span>
-          <p class="quantity">vanaf {quantity}</p>
         </div>
-        <p class="best-price">€{Math.round(pp.bestPrice * 100)/100}</p>
+        <div>
+          <p class="quantity">vanaf {quantity}</p>
+          <p class="best-price">€{Math.round(pp.bestPrice * 100)/100}</p>
+        </div>
       </div>
       <p class="avg">gem laatste 30 dagen: €{Math.round(pp.thirtyDayAvg * 100)/100}</p>
     </div>
@@ -47,7 +49,7 @@
 
 <style>
   .long-name {
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: bold;
     margin: 0;
     overflow: hidden;
@@ -55,7 +57,7 @@
     white-space: nowrap;
   }
   .avg {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     text-align: right;
   }
   .info-container {
@@ -72,12 +74,18 @@
     gap: var(--m-small);
   }
   .best-price {
-    font-size: 2.6rem;
-    line-height: 2.6rem;
+    font-size: 2.2rem;
+    line-height: 2.2rem;
     font-weight: bold;
     margin: 0;
     text-align: right;
     color: var(--color-colruyt-red);
+  }
+  .diff-container {
+    height: 2.2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
   .diff {
     color: var(--color-foreground-inverse);
@@ -91,7 +99,6 @@
     font-size: 0.8rem;
     line-height: 0.8rem;
     color: var(--color-colruyt-red);
-    margin-top: 0.4rem;
     text-align: right;
   }
 

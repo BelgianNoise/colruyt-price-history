@@ -32,6 +32,8 @@
     margin: auto;
     padding: var(--m-small);
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
   }
   @media (min-width: 650px) {
     #slot-container {
