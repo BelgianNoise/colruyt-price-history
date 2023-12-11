@@ -53,5 +53,6 @@
     border: 1px solid #222;
     margin: 0 auto;
     margin-bottom: var(--m-normal);
+    font-size: var(--font-size-small);
   }
 </style>
