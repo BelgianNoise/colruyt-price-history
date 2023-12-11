@@ -27,14 +27,15 @@
   #content {
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: var(--m-small);
+    padding: var(--m-small) var(--m-normal);
     background-color: var(--color-background);
     justify-content: space-between;
   }
   #header, #body, #footer {
-    padding: var(--m-small) var(--m-normal);
+    padding: 0;
     overflow: hidden;
-    max-width: calc(100% - 2 * var(--m-normal));
+    max-width: 100%;
   }
   .hide {
     display: none;
