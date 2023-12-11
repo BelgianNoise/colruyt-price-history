@@ -111,7 +111,7 @@
   div[slot="body"] > img {
     width: 100px;
     max-width: 20%;
-    height: 100px;
+    aspect-ratio: 1/1;
     object-fit: contain;
   }
   div[slot="body"] > div {
