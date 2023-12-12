@@ -217,6 +217,8 @@
     border-top: none;
     border-bottom-left-radius: var(--m-small);
     border-bottom-right-radius: var(--m-small);
+    width: calc(100% - (var(--m-small) + 1px) * 2);
+    text-align: center;
   }
   .link {
     padding: var(--m-normal);
