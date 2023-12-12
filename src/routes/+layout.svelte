@@ -31,7 +31,6 @@
     max-width: 1000px !important;
     margin: auto;
     padding: var(--m-small);
-    overflow-x: hidden;
     display: flex;
     flex-direction: column;
   }

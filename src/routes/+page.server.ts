@@ -5,6 +5,7 @@ import type { PP, PPGCSDOCFORMAT } from '$lib/models/pp';
 
 export interface RootLoadResults {
   pp: PP[];
+  ppNew: PP[];
   ss: PriceChange[];
   dd: PriceChange[];
 }
@@ -16,6 +17,10 @@ export async function load(
   try { pp = await getPP() } catch (e) {
     console.error('An error occured', e);
   }
+  let ppNew: PP[] = [];
+  try { ppNew = await getPPNew() } catch (e) {
+    console.error('An error occured', e);
+  }
   let ss: PriceChange[] = [];
   try { ss = await getSS() } catch (e) {
     console.error('An error occured', e);
@@ -25,7 +30,7 @@ export async function load(
     console.error('An error occured', e);
   }
 
-  return { pp, ss, dd };
+  return { pp, ss, dd, ppNew };
 }
 
 async function getPP(): Promise<PP[]> {
@@ -33,6 +38,24 @@ async function getPP(): Promise<PP[]> {
     const storage = new Storage();
     const bucket = storage.bucket('colruyt-products');
     const file = bucket.file('prettige-prijzen/pp-mini.json');
+    const [ fileContent ] = await file.download();
+    const fileString = fileContent.toString();
+    const fileJson: PPGCSDOCFORMAT = JSON.parse(fileString);
+    if (new Date(fileJson.date).getTime() < new Date().getTime() - 24 * 60 * 60 * 1000) {
+      return [];
+    }
+    return fileJson.data;
+  } catch (e) {
+    console.error('An error occured', e);
+    return [];
+  }
+}
+
+async function getPPNew(): Promise<PP[]> {
+  try {
+    const storage = new Storage();
+    const bucket = storage.bucket('colruyt-products');
+    const file = bucket.file('prettige-prijzen/pp-changes-mini.json');
     const [ fileContent ] = await file.download();
     const fileString = fileContent.toString();
     const fileJson: PPGCSDOCFORMAT = JSON.parse(fileString);

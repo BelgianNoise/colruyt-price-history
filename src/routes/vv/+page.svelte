@@ -2,9 +2,9 @@
   import PPList from "$lib/components/pp-list.svelte";
   import type { PP } from "$lib/models/pp";
   import { debounce } from "$lib/utils/debounce";
-  import type { PPLoadResults } from "./+page.server";
+  import type { VVLoadResults } from "./+page.server";
 
-  export let data: PPLoadResults;
+  export let data: VVLoadResults;
   let searcInputhValue = "";
   let searchValue = "";
 
@@ -27,13 +27,12 @@
 
 {#if data.pp.length === 0}
   <p>
-    Door een foutje op de server kunnen er voor
-    vandaag geen resulaten worden weergegeven
+    Geen opmerkelijke nieuwe kortingen vandaag ¯\_(ツ)_/¯
   </p>
 {:else}
   <input
     type="text"
-    placeholder="Zoeken in de prettige prijzen..."
+    placeholder="Zoeken in de vrome verminderingen..."
     bind:value={searcInputhValue}
     on:keydown={() => search()}
   />
