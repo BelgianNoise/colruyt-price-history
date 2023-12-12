@@ -54,7 +54,7 @@
         </p>
       {:else}
         <PPList pps={data.ppNew} />
-        <a class="link" href="/pp">Toon Alles >>></a>
+        <a class="link" href="/vv">Toon Alles >>></a>
       {/if}
     </div>
   {/if}
@@ -89,7 +89,7 @@
         </p>
       {:else}
         <PPList pps={data.pp} />
-        <a class="link" href="/vv">Toon Alles >>></a>
+        <a class="link" href="/pp">Toon Alles >>></a>
       {/if}
     </div>
   {/if}
