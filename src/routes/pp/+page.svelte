@@ -9,9 +9,21 @@
   let searchValue = "";
 
   const filterPPs = (): PP[] => {
-    const res = data.pp.filter((pp) =>
-      pp.longName.toLowerCase().includes(searchValue.toLowerCase())
-    );
+    const res = data.pp.filter((pp) => {
+      const searchValuesSplit = searchValue.split(" ");
+      return searchValuesSplit.every((s) => {
+        if (
+          (s.startsWith('-') && s.length < 3) ||
+          (!s.startsWith('-') && s.length < 2)
+        ) {
+          return true;
+        } else if (s.startsWith("-")) {
+          return !pp.longName.toLowerCase().includes(s.slice(1).toLowerCase())
+        } else {
+          return pp.longName.toLowerCase().includes(s.toLowerCase());
+        }
+      });
+    });
     return res;
   }
 
