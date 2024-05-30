@@ -14,8 +14,8 @@
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <img
-    src="/colruyt-white.png"
-    alt="colruyt logo"
+    src="/cooltruy.png"
+    alt="a logo"
     on:click={() => window.location.href = "/"}
   />
   <div id="input-container">
