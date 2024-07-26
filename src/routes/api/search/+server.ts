@@ -6,9 +6,10 @@ export async function GET(event: RequestEvent): Promise<Response> {
 
   const query = event.url.searchParams.get('query');
   if (!query) return json([], { status: 400 });
-  const lowerCaseQuery = query.toLowerCase();
+  const lowerCaseQuery = query.toLowerCase().trim();
   const splitQuery = lowerCaseQuery.split(' ');
-
+  
+  const startTime = Date.now();
   const result = await dbPool.query(`
     SELECT p.*, pr.id as price_id, pr.*, p.id
     FROM
@@ -34,6 +35,8 @@ export async function GET(event: RequestEvent): Promise<Response> {
       )
     LIMIT 100
   `, [ lowerCaseQuery, ...splitQuery ]);
+  const endTime = Date.now();
+  console.log('Query "', query, '" took', endTime - startTime, 'ms');
 
   const products: Product[] = result.rows.map((row) => parseToProduct(row));
   const sorted = products.sort((a, b) => {
