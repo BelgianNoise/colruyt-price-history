@@ -16,45 +16,8 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - uses: treosh/lighthouse-ci-action@v12
         with:
-          node-version: 18
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build
-        run: npm run build
-        env:
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          BASE_URL: ${{ secrets.BASE_URL }}
-
-      - name: Start server in background
-        run: npm run preview &
-        env:
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          BASE_URL: ${{ secrets.BASE_URL }}
-
-      - name: Wait for server to start
-        run: sleep 10
-
-      - name: Run Lighthouse
-        uses: treosh/lighthouse-ci-action@v12
-        with:
-          urls: |
-            http://localhost:4173/
           uploadArtifacts: true
           temporaryPublicStorage: true
           budgetPath: ./lighthouse-budget.json
