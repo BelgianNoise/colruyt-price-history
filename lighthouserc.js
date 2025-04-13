@@ -1,6 +1,13 @@
 export const ci = {
   collect: {
-    url: ['https://colruyt-prijzen.nasaj.be/'],
+    url: [
+      'https://colruyt-prijzen.nasaj.be/',
+      'https://colruyt-prijzen.nasaj.be/vv',
+      'https://colruyt-prijzen.nasaj.be/pp',
+      'https://colruyt-prijzen.nasaj.be/dd',
+      'https://colruyt-prijzen.nasaj.be/ss',
+      'https://colruyt-prijzen.nasaj.be/product/18574'
+    ],
   },
   upload: {
     target: 'temporary-public-storage',

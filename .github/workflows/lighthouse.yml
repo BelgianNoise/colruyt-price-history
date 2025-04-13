@@ -1,9 +1,6 @@
 name: Lighthouse
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -19,8 +16,22 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: treosh/lighthouse-ci-action@v12
+        id: lighthouse-ci
         with:
           uploadArtifacts: true
           temporaryPublicStorage: true
           budgetPath: ./lighthouse-budget.json
           configPath: ./lighthouserc.js
+          
+      - name: Format and log Lighthouse results
+        run: |
+          echo "::group::Lighthouse Results Summary"
+          echo "✅ Lighthouse audit completed successfully!"
+          echo "📊 Results URL: ${{ steps.lighthouse-ci.outputs.resultsUrl }}"
+          echo "📝 Summary:"
+          echo "  - Performance: ${{ steps.lighthouse-ci.outputs.performance }}"
+          echo "  - Accessibility: ${{ steps.lighthouse-ci.outputs.accessibility }}"
+          echo "  - Best Practices: ${{ steps.lighthouse-ci.outputs.best-practices }}"
+          echo "  - SEO: ${{ steps.lighthouse-ci.outputs.seo }}"
+          echo "  - PWA: ${{ steps.lighthouse-ci.outputs.pwa }}"
+          echo "::endgroup::"
