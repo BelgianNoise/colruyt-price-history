@@ -51,7 +51,7 @@ jobs:
         run: sleep 10
 
       - name: Run Lighthouse
-        uses: treosh/lighthouse-ci-action@v10
+        uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
             http://localhost:4173/
@@ -59,22 +59,3 @@ jobs:
           temporaryPublicStorage: true
           budgetPath: ./lighthouse-budget.json
           configPath: ./lighthouserc.js
-          runs: 3
-          serverBaseUrl: ${{ github.event.pull_request.head.repo.html_url || github.event.repository.html_url }}
-          serverToken: ${{ secrets.GITHUB_TOKEN }}
-          pr:
-            enabled: ${{ github.event_name == 'pull_request' }}
-            comment: true
-            commentUrl: ${{ github.event.pull_request.html_url }}
-            commentTemplate: |
-              ## ⚡️ Lighthouse Report
-
-              | Category | Score |
-              | --- | --- |
-              | Performance | ${{ '{{' }} results.performance * 100 {{ '}}' }}% |
-              | Accessibility | ${{ '{{' }} results.accessibility * 100 {{ '}}' }}% |
-              | Best practices | ${{ '{{' }} results.bestPractices * 100 {{ '}}' }}% |
-              | SEO | ${{ '{{' }} results.seo * 100 {{ '}}' }}% |
-              | PWA | ${{ '{{' }} results.pwa * 100 {{ '}}' }}% |
-
-              [View full report](${{ '{{' }} results.lhr.url {{ '}}' }})

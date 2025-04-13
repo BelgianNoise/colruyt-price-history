@@ -3,7 +3,6 @@ export default {
     collect: {
       url: ['http://localhost:4173/'],
       startServerCommand: '', // We're starting the server in the GitHub Action
-      numberOfRuns: 3,
     },
     upload: {
       target: 'temporary-public-storage',
