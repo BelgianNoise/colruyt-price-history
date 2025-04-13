@@ -20,18 +20,17 @@ jobs:
         with:
           uploadArtifacts: true
           temporaryPublicStorage: true
-          budgetPath: ./lighthouse-budget.json
           configPath: ./lighthouserc.js
           
-      - name: Format and log Lighthouse results
+      - name: Extract and Log Google API URLs
         run: |
-          echo "::group::Lighthouse Results Summary"
-          echo "✅ Lighthouse audit completed successfully!"
-          echo "📊 Results URL: ${{ steps.lighthouse-ci.outputs.resultsUrl }}"
-          echo "📝 Summary:"
-          echo "  - Performance: ${{ steps.lighthouse-ci.outputs.performance }}"
-          echo "  - Accessibility: ${{ steps.lighthouse-ci.outputs.accessibility }}"
-          echo "  - Best Practices: ${{ steps.lighthouse-ci.outputs.best-practices }}"
-          echo "  - SEO: ${{ steps.lighthouse-ci.outputs.seo }}"
-          echo "  - PWA: ${{ steps.lighthouse-ci.outputs.pwa }}"
+          echo "::group::Lighthouse Report URLs"
+          echo "📊 Extracted Report URLs:"
+          
+          # Get the run output and extract Google API URLs
+          grep -o "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/[0-9]*-[0-9]*.report.html" $GITHUB_STEP_SUMMARY || echo "No report URLs found"
+          
+          # Save URLs to a file for potential future use
+          grep -o "https://storage.googleapis.com/lighthouse-infrastructure.appspot.com/reports/[0-9]*-[0-9]*.report.html" $GITHUB_STEP_SUMMARY > lighthouse_report_urls.txt || true
+          
           echo "::endgroup::"
