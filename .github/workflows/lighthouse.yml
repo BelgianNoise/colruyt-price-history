@@ -23,6 +23,7 @@ jobs:
           configPath: ./lighthouserc.js
           
       - name: Extract and Log Google API URLs
+        if: always()
         run: |
           echo "::group::Lighthouse Report URLs"
           echo "📊 Extracted Report URLs:"
