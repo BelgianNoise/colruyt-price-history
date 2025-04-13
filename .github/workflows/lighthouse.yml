@@ -16,6 +16,8 @@ jobs:
       pull-requests: write
 
     steps:
+      - uses: actions/checkout@v4
+
       - uses: treosh/lighthouse-ci-action@v12
         with:
           uploadArtifacts: true
